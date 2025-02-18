@@ -325,23 +325,18 @@ aggregate_utilities <- function(mcda, criteria, label, method = "sum", set_weigh
 run_maut <- function(mcda, criteria) {
   
   # the MAUT method performs a weighted mean of the criteria's utilities that are relevant to the stakeholders. the resultant total utility provide a summary estimate of the alternative value
-  
-  if (length(criteria) == 1) {
-    if (criteria == 'all') {
-      criteria_list <- mcda$criteria
-  } else {
-    criteria_list <- criteria
-  }}
-    else {
-      criteria_list <- criteria
-    }
-  w <- unlist(lapply(criteria_list, function(c) mcda$weights[[c]]))
+  # the function returns the mcda object with the total utility for each alternative
+
+  w <- unlist(lapply(criteria, function(c) mcda$weights[[c]]))
   w <- w / sum(w)
   
   for (alt in names(mcda$alternatives)) {
     U_tot <- 0
-    for (i in seq_along(criteria_list)) {
-      U_tot <- U_tot + mcda$alternatives[[alt]]$utilities[[criteria_list[i]]] * w[i]
+    for (i in seq_along(criteria)) {
+      if (!(criteria[i] %in% names(alt$utilities))) {
+        stop(paste("", criteria[i], "is not a in the utilities list"))
+      }
+      U_tot <- U_tot + mcda$alternatives[[alt]]$utilities[[criteria[i]]] * w[i]
     }
     mcda$alternatives[[alt]]$total_utility <- U_tot
   }
