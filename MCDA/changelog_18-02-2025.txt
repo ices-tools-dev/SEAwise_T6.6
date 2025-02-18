@@ -1,0 +1,2 @@
+18-02-2025:
+run_maut function modified to avoid empty list in the calculation of total_utility if a wrong or empty criterion is passed
