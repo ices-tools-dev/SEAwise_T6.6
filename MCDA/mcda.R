@@ -333,7 +333,7 @@ run_maut <- function(mcda, criteria) {
   for (alt in names(mcda$alternatives)) {
     U_tot <- 0
     for (i in seq_along(criteria)) {
-      if (!(criteria[i] %in% names(alt$utilities))) {
+      if (!(criteria[i] %in% names(mcda$alternatives[[alt]]$utilities))) {
         stop(paste("", criteria[i], "is not a in the utilities list"))
       }
       U_tot <- U_tot + mcda$alternatives[[alt]]$utilities[[criteria[i]]] * w[i]

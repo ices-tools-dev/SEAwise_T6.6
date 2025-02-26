@@ -58,6 +58,7 @@ mcda <- aggregate_utilities(mcda, criteria = c('co2'), label = "well-being", met
 mcda  <- run_maut(mcda,
                   criteria = c("stocks", "biodiversity","habitats", "community", "revenue", "well-being")
 )
+
 # note that the total utility is the result of the passed criteria only. keep that in mind for visualization
 
 # transfer the results on a df
@@ -72,7 +73,6 @@ tops = top_scenarios(dataframe = df,
                      criterion = 'total_utility',
                      num = 5,
                      ascending = FALSE)
-
 
 # Visualization
 plot_matrix(df, criteria = c("stocks", "biodiversity","habitats", "community", "revenue", "well-being", "total_utility"),
